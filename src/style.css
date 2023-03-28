@@ -84,7 +84,9 @@ input:focus {
   content: url("./images/001-menu.png");
 }
 
-.ptr:hover, label:hover, .lists input:hover {
+.ptr:hover,
+label:hover,
+.lists input:hover {
   cursor: pointer;
 }
 

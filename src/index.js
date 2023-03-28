@@ -1,23 +1,22 @@
 // import _ from 'lodash';
-import "./style.css";
+import './style.css';
 
 function component() {
-  const element = document.createElement("div");
-  const todoList = document.querySelector('.list-container')
+  const todoList = document.querySelector('.list-container');
   const tasks = [
     {
       index: 0,
-      description: "wash the dishes",
-      completed: "false",
+      description: 'wash the dishes',
+      completed: 'false',
     },
     {
       index: 1,
-      description: "complete To Do list project",
-      completed: "false",
+      description: 'complete To Do list project',
+      completed: 'false',
     },
   ];
 
-  tasks.forEach(task => {
+  tasks.forEach((task) => {
     todoList.innerHTML += `
     <section class="lists">
       <div class="list">
@@ -26,13 +25,8 @@ function component() {
       </div>
       <i id="selection" class="ptr"></i>
     </section>
-    `
-  })
-  // Lodash, now imported by this script
-  // element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  // element.classList.add('hello');
-
-  return element;
+    `;
+  });
 }
 
 document.body.appendChild(component());
