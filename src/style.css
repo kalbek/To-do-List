@@ -51,6 +51,16 @@ input {
   border-color: #fff;
 }
 
+.addlist input {
+  width: 100%;
+  color: #b1b1b1;
+  font-style: italic;
+}
+
+.add-list input::placeholder {
+  opacity: 0.1;
+}
+
 .add-list input::placeholder,
 .clear {
   color: #b0b0b0;
@@ -74,7 +84,7 @@ input:focus {
   content: url("./images/001-menu.png");
 }
 
-.ptr:hover {
+.ptr:hover, label:hover, .lists input:hover {
   cursor: pointer;
 }
 
