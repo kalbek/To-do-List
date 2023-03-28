@@ -1,0 +1,99 @@
+* {
+  font-family: "Lato", sans-serif;
+  font-size: 22px;
+}
+
+.flex-spaced {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-centered {
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  background-color: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 98vh;
+}
+
+main {
+  background-color: #fff;
+  padding: 1rem;
+  width: 50vw;
+  box-shadow: 0.1px 0.1px 14px 14px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+}
+
+main section {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #f1f1f1;
+  padding: 1rem 0;
+}
+
+.lists {
+  display: flex;
+  justify-content: space-between;
+}
+
+main p {
+  color: #454545;
+}
+
+input {
+  border: 0;
+  border-color: #fff;
+}
+
+.addlist input {
+  width: 100%;
+  color: #b1b1b1;
+  font-style: italic;
+}
+
+.add-list input::placeholder {
+  opacity: 0.1;
+}
+
+.add-list input::placeholder,
+.clear {
+  color: #b0b0b0;
+}
+
+input:focus {
+  outline: none;
+}
+
+#enter {
+  content: url("./images/003-enter.png");
+}
+
+#reset {
+  width: 25px;
+  height: 25px;
+  content: url("./images/002-arrows-circle.png");
+}
+
+#selection {
+  content: url("./images/001-menu.png");
+}
+
+.ptr:hover,
+label:hover,
+.lists input:hover {
+  cursor: pointer;
+}
+
+i {
+  opacity: 0.3;
+}
+
+i:hover {
+  opacity: 1;
+}
