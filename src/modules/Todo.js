@@ -28,6 +28,27 @@ export default class Todo {
     document.querySelector('#todo-input').focus();
   };
 
+  static updateTodos = (todo, indexToUpdate) => {
+    const todoToUpdate = document.getElementById(`task-${indexToUpdate}`);
+
+    // add event listener for updating todo on enter key pressed
+    todoToUpdate.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        // update todo's
+        todo.description = e.target.value;
+        // after updating todo's, reset the icon from delete back to select
+        const icon = document.querySelector(`.remove-${indexToUpdate}`);
+        icon.id = 'selection';
+        // deselect todo row
+        const todoRow = document.querySelector(`.lists-${indexToUpdate}`);
+        todoRow.classList.remove('active');
+        // and the focus back to todo's input
+        document.querySelector('#todo-input').focus();
+      }
+    });
+    document.getElementById(`task-${indexToUpdate}`).focus();
+  }
+
   static updateUI = (targetElement) => {
     //  clear currently displayed todos
     targetElement.innerHTML = '';
@@ -35,21 +56,34 @@ export default class Todo {
     for (let i = Todo.todoList.length - 1; i >= 0; i -= 1) {
       const task = Todo.todoList[i];
       targetElement.innerHTML += `
-        <section class='lists'>
+        <section class='lists lists-${task.index}'>
             <div class='list'>
                 <input class='single-todo' type='checkbox' id='single-list-${task.index}' />
-                <label for='single-list-${task.index}'>${task.description} </label>
+                <label for='single-list-${task.index}'>
+                  <input id='task-${task.index}' value=${task.description} />
+                </label>
             </div>
             <i id='selection' class='ptr remove-${i}'></i>
         </section>
     `;
     }
     // for each newly displayed to does create remove event
-    Todo.todoList.forEach((_, index) => {
-      const remove = document.querySelector(`.remove-${index}`);
-      remove.addEventListener('click', () => {
-        const indexToRemove = Number(remove.classList[1].slice(7));
-        Todo.removeTodo(indexToRemove);
+    Todo.todoList.forEach((todo, index) => {
+      const select = document.querySelector(`.remove-${index}`);
+      select.addEventListener('click', () => {
+        const selectedTodoIndex = Number(select.classList[1].slice(7));
+        // select the todo to be edited or removed
+        select.id = 'selected';
+        Todo.updateTodos(todo, selectedTodoIndex);
+        // select to do row
+        const todoRow = document.querySelector(`.lists-${selectedTodoIndex}`);
+        todoRow.classList.add('active');
+        // create removing event for select's remove instance
+        select.classList.add('remove-todo');
+        const remove = document.querySelector('.remove-todo');
+        remove.addEventListener('click', () => {
+          Todo.removeTodo(selectedTodoIndex);
+        });
       });
     });
   };
