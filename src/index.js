@@ -1,32 +1,36 @@
 // import _ from 'lodash';
 import './style.css';
+import Todo from './modules/Todo.js';
 
-function component() {
-  const todoList = document.querySelector('.list-container');
-  const tasks = [
-    {
-      index: 0,
-      description: 'wash the dishes',
-      completed: 'false',
-    },
-    {
-      index: 1,
-      description: 'complete To Do list project',
-      completed: 'false',
-    },
-  ];
+const addTodo = document.querySelector('#enter');
+const todoList = document.querySelector('.list-container');
+const todo = document.querySelector('#todo-input');
 
-  tasks.forEach((task) => {
-    todoList.innerHTML += `
-    <section class="lists">
-      <div class="list">
-        <input type="checkbox" id="single-list-${task.index}" />
-        <label for="single-list-${task.index}">${task.description} </label>
-      </div>
-      <i id="selection" class="ptr"></i>
-    </section>
-    `;
-  });
+function addTodos() {
+  if (todo.value !== '') Todo.setTodo(todo.value, false);
+  // console.log(todo.value)
+  todo.value = '';
+  todo.focus();
 }
 
+function component() {
+  const element = document.createElement('div');
+
+  Todo.updateUI(todoList);
+
+  // handle event for add todo
+  addTodo.addEventListener('click', () => {
+    addTodos();
+  });
+
+  todo.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') addTodos();
+  });
+
+  return element;
+}
+
+window.onload = () => {
+  todo.focus();
+};
 document.body.appendChild(component());

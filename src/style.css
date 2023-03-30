@@ -28,6 +28,8 @@ main {
   width: 50vw;
   box-shadow: 0.1px 0.1px 14px 14px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 main section {
@@ -84,6 +86,10 @@ input:focus {
   content: url("./images/001-menu.png");
 }
 
+#selected {
+  content: url("./images/002-bin.png");
+}
+
 .ptr:hover,
 label:hover,
 .lists input:hover {
@@ -96,4 +102,9 @@ i {
 
 i:hover {
   opacity: 1;
+}
+
+.active,
+.active * {
+  background-color: #ebeab4;
 }
