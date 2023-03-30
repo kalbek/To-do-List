@@ -13,6 +13,7 @@ export default class Todo {
     const todoList = document.querySelector('.list-container');
     Todo.todoList.push(todo);
     Todo.updateUI(todoList);
+    // Todo.handleTaskCompletion();
   };
 
   // remove todo from Todo's todoList by index
@@ -53,6 +54,27 @@ export default class Todo {
     document.getElementById(`task-${indexToUpdate}`).focus();
   };
 
+  // handle selections for todo's checkboxes
+  static handleTaskCompletion = () => {
+    // handle selections for todo's checkboxes
+    Todo.todoList.forEach((task) => {
+      // first select the checkboxes
+      const todoCheckbox = document.querySelector(
+        `#todo-checkbox-${task.index}`,
+      );
+      // add on change event listener for each of them
+      todoCheckbox.addEventListener('change', () => {
+        task.completed = !task.completed;
+        // get the label to those checkboxes
+        const label = document.querySelector(`#checkbox-${task.index}`);
+        // toogel their classes based on selection
+
+        if (task.completed) label.classList.remove('completed');
+        else label.classList.add('completed');
+      });
+    });
+  };
+
   static updateUI = (targetElement) => {
     //  clear currently displayed todos
     targetElement.innerHTML = '';
@@ -62,15 +84,32 @@ export default class Todo {
       targetElement.innerHTML += `
         <section class='lists lists-${task.index}'>
             <div class='list'>
-                <input class='single-todo' type='checkbox' id='single-list-${task.index}' />
-                <label for='single-list-${task.index}'>
-                  <input id='task-${task.index}' value='${task.description}' />
+                <input class='single-todo' type='checkbox'  id='todo-checkbox-${task.index}' />
+                <label id='checkbox-${task.index}' class='' for='single-list-${task.index}'>
+                  <input class='list-input' id='task-${task.index}' value='${task.description}' />
                 </label>
             </div>
             <i id='selection' class='ptr select-${i}'></i>
         </section>
     `;
     }
+    // handle selections for todo's checkboxes
+    Todo.todoList.forEach((task) => {
+      // first select the checkboxes
+      const todoCheckbox = document.querySelector(
+        `#todo-checkbox-${task.index}`,
+      );
+      // add on change event listener for each of them
+      todoCheckbox.addEventListener('change', () => {
+        task.completed = !task.completed;
+        // get the label to those checkboxes
+        const label = document.querySelector(`#checkbox-${task.index}`);
+        // toogel their classes based on selection
+
+        if (!task.completed) label.classList.remove('completed');
+        else label.classList.add('completed');
+      });
+    });
 
     // for each newly displayed to does create remove event
     Todo.todoList.forEach((todo, index) => {

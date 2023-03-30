@@ -72,6 +72,10 @@ input:focus {
   outline: none;
 }
 
+.list-input {
+  width: 45vw;
+}
+
 #enter {
   content: url("./images/003-enter.png");
 }
@@ -107,4 +111,9 @@ i:hover {
 .active,
 .active * {
   background-color: #ebeab4;
+}
+
+.completed,
+.completed * {
+  text-decoration: line-through;
 }
