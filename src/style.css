@@ -61,15 +61,15 @@ input {
 
 .add-list input::placeholder {
   opacity: 0.1;
-}
-
-.add-list input::placeholder,
-.clear {
   color: #b0b0b0;
 }
 
 input:focus {
   outline: none;
+}
+
+.list-input {
+  width: 45vw;
 }
 
 #enter {
@@ -88,11 +88,11 @@ input:focus {
 
 #selected {
   content: url("./images/002-bin.png");
+  height: auto;
 }
 
 .ptr:hover,
-label:hover,
-.lists input:hover {
+label:hover {
   cursor: pointer;
 }
 
@@ -107,4 +107,19 @@ i:hover {
 .active,
 .active * {
   background-color: #ebeab4;
+}
+
+.completed,
+.completed * {
+  text-decoration: line-through;
+}
+
+.clear-all p {
+  opacity: 0.4;
+}
+
+.clear-all p:hover {
+  text-decoration: underline;
+  color: #000;
+  opacity: 1;
 }

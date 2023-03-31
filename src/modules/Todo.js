@@ -1,11 +1,18 @@
 export default class Todo {
+  // todo list arrat to store all todos
   static todoList = [];
 
+  // initialize todo values
   constructor(description, completed) {
     this.description = description;
     this.completed = completed;
     this.index = Todo.todoList.length;
   }
+
+  // update localstorage for todos
+  static updateLocalstorage = () => {
+    localStorage.setItem('todo', JSON.stringify(Todo.todoList));
+  };
 
   // add todo into Todo's todoList
   static setTodo = (description, completed) => {
@@ -13,6 +20,14 @@ export default class Todo {
     const todoList = document.querySelector('.list-container');
     Todo.todoList.push(todo);
     Todo.updateUI(todoList);
+    // update localstorage for todos
+    Todo.updateLocalstorage();
+  };
+
+  // update todo as a whole (especially) from localstorage
+  static updateTodo = (currentTodo) => {
+    Todo.todoList = currentTodo;
+    Todo.updateUI(document.querySelector('.list-container'));
   };
 
   // remove todo from Todo's todoList by index
@@ -26,30 +41,33 @@ export default class Todo {
     Todo.updateUI(todoList);
     // foucs carret on input box
     document.querySelector('#todo-input').focus();
+    // update localstorage for todos
+    Todo.updateLocalstorage();
   };
 
   static updateTodos = (todo, indexToUpdate) => {
     const todoToUpdate = document.getElementById(`task-${indexToUpdate}`);
 
     // add event listener for updating todo on enter key pressed
-    todoToUpdate.addEventListener('keydown', (e) => {
-      function updationTarget() {
-        todo.description = e.target.value;
-      }
-      if (e.key === 'Enter') {
-        updationTarget();
-        // update todo's
-        todo.description = e.target.value;
-        // after updating todo's, reset the icon from delete back to select
-        const icon = document.querySelector(`.select-${indexToUpdate}`);
-        icon.id = 'selection';
-        // deselect todo row
-        const todoRow = document.querySelector(`.lists-${indexToUpdate}`);
-        todoRow.classList.remove('active');
-        // and the focus back to todo's input
-        document.querySelector('#todo-input').focus();
-      }
-    });
+    if (todoToUpdate !== null) {
+      todoToUpdate.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          todo.description = e.target.value;
+          // update todo's
+          todo.description = e.target.value;
+          // after updating todo's, reset the icon from delete back to select
+          const icon = document.querySelector(`.select-${indexToUpdate}`);
+          icon.id = 'selection';
+          // deselect todo row
+          const todoRow = document.querySelector(`.lists-${indexToUpdate}`);
+          todoRow.classList.remove('active');
+          // and the focus back to todo's input
+          document.querySelector('#todo-input').focus();
+        }
+        // update localstorage for todos
+        Todo.updateLocalstorage();
+      });
+    }
     document.getElementById(`task-${indexToUpdate}`).focus();
   };
 
@@ -62,14 +80,20 @@ export default class Todo {
       targetElement.innerHTML += `
         <section class='lists lists-${task.index}'>
             <div class='list'>
-                <input class='single-todo' type='checkbox' id='single-list-${task.index}' />
-                <label for='single-list-${task.index}'>
-                  <input id='task-${task.index}' value='${task.description}' />
-                </label>
+              <input class='single-todo' type='checkbox' id='todo-checkbox-${
+                task.index
+              }' />
+              <label id='checkbox-${task.index}' class='' for='single-list-${
+                task.index
+              }'>
+                <input class='list-input ${
+                  task.completed ? 'completed' : ''
+                }' id='task-${task.index}' value='${task.description}' />
+              </label>
             </div>
             <i id='selection' class='ptr select-${i}'></i>
         </section>
-    `;
+      `;
     }
 
     // for each newly displayed to does create remove event
@@ -93,11 +117,54 @@ export default class Todo {
       // also update todo's when manually selected
       // (i.e.update by focusing on input box of each todos)
       const currentTodo = document.querySelector(`#task-${index}`);
-      currentTodo.addEventListener('click', () => {
-        todoRow.classList.add('active');
-        const selectedTodoIndex = Number(currentTodo.id.slice(5));
-        Todo.updateTodos(todo, selectedTodoIndex);
+      if (currentTodo !== null) {
+        currentTodo.addEventListener('click', () => {
+          todoRow.classList.add('active');
+          const selectedTodoIndex = Number(currentTodo.id.slice(5));
+          Todo.updateTodos(todo, selectedTodoIndex);
+        });
+      }
+    });
+
+    // handle selections for todo's checkboxes
+    Todo.todoList.forEach((task) => {
+      // const todoList = document.querySelector('.list-container');
+      // Todo.updateUI(todoList)
+      // first select the checkboxes
+      const todoCheckbox = document.querySelector(
+        `#todo-checkbox-${task.index}`,
+      );
+      // add on change event listener for each checkboxes
+      todoCheckbox.addEventListener('change', () => {
+        task.completed = !task.completed;
+        // get the label to those checkboxes
+        const label = document.querySelector(`#checkbox-${task.index}`);
+        // toogel their classes based on selection
+        if (!task.completed) label.classList.remove('completed');
+        else label.classList.add('completed');
+        // update localstorage for todos
+        Todo.updateLocalstorage();
       });
+    });
+    // keep checkboxes checked status when updating the ui
+    // i.e. for completed tasks check the checkbox and for
+    // uncompleted tasks uncheck the checkbox
+    Todo.todoList.forEach((todo) => {
+      const checkbox = document.querySelector(`#todo-checkbox-${todo.index}`);
+      if (todo.completed) checkbox.checked = true;
+    });
+    Todo.clearCompletedLists();
+  };
+
+  static clearCompletedLists = () => {
+    // handle clear completed todo's functionality
+    const clear = document.querySelector('.clear-all');
+    const todoList = document.querySelector('.list-container');
+    clear.addEventListener('click', () => {
+      Todo.todoList = Todo.todoList.filter((todos) => todos.completed !== true);
+      // update localstorage for todos
+      Todo.updateLocalstorage();
+      Todo.updateUI(todoList);
     });
   };
 }

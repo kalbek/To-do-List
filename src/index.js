@@ -8,7 +8,6 @@ const todo = document.querySelector('#todo-input');
 
 function addTodos() {
   if (todo.value !== '') Todo.setTodo(todo.value, false);
-  // console.log(todo.value)
   todo.value = '';
   todo.focus();
 }
@@ -26,11 +25,15 @@ function component() {
   todo.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') addTodos();
   });
-
   return element;
 }
 
 window.onload = () => {
+  // update todoList on page load
+  const currentTodo = localStorage.getItem('todo');
+  Todo.todoList = JSON.parse(currentTodo);
+  Todo.updateUI(document.querySelector('.list-container'));
+  // focus carret on add todo textbox
   todo.focus();
 };
 document.body.appendChild(component());
