@@ -117,3 +117,7 @@ i:hover {
 .completed * {
   text-decoration: line-through;
 }
+
+.bgr {
+  background-color: red;
+}

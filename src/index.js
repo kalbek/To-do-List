@@ -8,7 +8,6 @@ const todo = document.querySelector('#todo-input');
 
 function addTodos() {
   if (todo.value !== '') Todo.setTodo(todo.value, false);
-  // console.log(todo.value)
   todo.value = '';
   todo.focus();
 }
@@ -26,7 +25,6 @@ function component() {
   todo.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') addTodos();
   });
-
   return element;
 }
 
