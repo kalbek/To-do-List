@@ -95,8 +95,7 @@ input:focus {
 }
 
 .ptr:hover,
-label:hover,
-.lists input:hover {
+label:hover {
   cursor: pointer;
 }
 

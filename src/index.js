@@ -29,6 +29,11 @@ function component() {
 }
 
 window.onload = () => {
+  // update todoList on page load
+  const currentTodo = localStorage.getItem('todo');
+  Todo.todoList = JSON.parse(currentTodo);
+  Todo.updateUI(document.querySelector('.list-container'));
+  // focus carret on add todo textbox
   todo.focus();
 };
 document.body.appendChild(component());
