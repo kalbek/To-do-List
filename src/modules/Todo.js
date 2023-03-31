@@ -49,23 +49,25 @@ export default class Todo {
     const todoToUpdate = document.getElementById(`task-${indexToUpdate}`);
 
     // add event listener for updating todo on enter key pressed
-    todoToUpdate.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        todo.description = e.target.value;
-        // update todo's
-        todo.description = e.target.value;
-        // after updating todo's, reset the icon from delete back to select
-        const icon = document.querySelector(`.select-${indexToUpdate}`);
-        icon.id = 'selection';
-        // deselect todo row
-        const todoRow = document.querySelector(`.lists-${indexToUpdate}`);
-        todoRow.classList.remove('active');
-        // and the focus back to todo's input
-        document.querySelector('#todo-input').focus();
-      }
-      // update localstorage for todos
-      Todo.updateLocalstorage();
-    });
+    if (todoToUpdate !== null) {
+      todoToUpdate.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          todo.description = e.target.value;
+          // update todo's
+          todo.description = e.target.value;
+          // after updating todo's, reset the icon from delete back to select
+          const icon = document.querySelector(`.select-${indexToUpdate}`);
+          icon.id = 'selection';
+          // deselect todo row
+          const todoRow = document.querySelector(`.lists-${indexToUpdate}`);
+          todoRow.classList.remove('active');
+          // and the focus back to todo's input
+          document.querySelector('#todo-input').focus();
+        }
+        // update localstorage for todos
+        Todo.updateLocalstorage();
+      });
+    }
     document.getElementById(`task-${indexToUpdate}`).focus();
   };
 
@@ -115,20 +117,24 @@ export default class Todo {
       // also update todo's when manually selected
       // (i.e.update by focusing on input box of each todos)
       const currentTodo = document.querySelector(`#task-${index}`);
-      currentTodo.addEventListener('click', () => {
-        todoRow.classList.add('active');
-        const selectedTodoIndex = Number(currentTodo.id.slice(5));
-        Todo.updateTodos(todo, selectedTodoIndex);
-      });
+      if (currentTodo !== null) {
+        currentTodo.addEventListener('click', () => {
+          todoRow.classList.add('active');
+          const selectedTodoIndex = Number(currentTodo.id.slice(5));
+          Todo.updateTodos(todo, selectedTodoIndex);
+        });
+      }
     });
 
     // handle selections for todo's checkboxes
     Todo.todoList.forEach((task) => {
+      // const todoList = document.querySelector('.list-container');
+      // Todo.updateUI(todoList)
       // first select the checkboxes
       const todoCheckbox = document.querySelector(
         `#todo-checkbox-${task.index}`,
       );
-      // add on change event listener for each of them
+      // add on change event listener for each checkboxes
       todoCheckbox.addEventListener('change', () => {
         task.completed = !task.completed;
         // get the label to those checkboxes
@@ -146,6 +152,19 @@ export default class Todo {
     Todo.todoList.forEach((todo) => {
       const checkbox = document.querySelector(`#todo-checkbox-${todo.index}`);
       if (todo.completed) checkbox.checked = true;
+    });
+    Todo.clearCompletedLists();
+  };
+
+  static clearCompletedLists = () => {
+    // handle clear completed todo's functionality
+    const clear = document.querySelector('.clear-all');
+    const todoList = document.querySelector('.list-container');
+    clear.addEventListener('click', () => {
+      Todo.todoList = Todo.todoList.filter((todos) => todos.completed !== true);
+      // update localstorage for todos
+      Todo.updateLocalstorage();
+      Todo.updateUI(todoList);
     });
   };
 }
