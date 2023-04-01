@@ -15,7 +15,7 @@ function addTodos() {
 function component() {
   const element = document.createElement("div");
 
-  Todo.updateUI(todoList);
+  // Todo.updateUI(todoList);
 
   // handle event for add todo
   addTodo.addEventListener("click", () => {
@@ -31,9 +31,9 @@ function component() {
 window.onload = () => {
   // update todoList on page load
   const currentTodo = localStorage.getItem("todo");
-  Todo.todoList = JSON.parse(currentTodo);
-  if (Todo != null) Todo.updateUI(document.querySelector(".list-container"));
-  // focus carret on add todo textbox
+  // Todo.todoList = JSON.parse(currentTodo);
+  // if (Todo != null) Todo.updateUI(document.querySelector(".list-container"));
+
   todo.focus();
 };
 document.body.appendChild(component());
