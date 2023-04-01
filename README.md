@@ -51,7 +51,7 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- The Live Demo of this portfolio can be found at: [@githubhandle](https://kalbek.github.io/To-do-List/)
+- Checkout the [Live Demo of To-do List App](https://kalbek.github.io/To-do-List/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
