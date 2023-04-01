@@ -72,6 +72,7 @@ export default class Todo {
   };
 
   static updateUI = (targetElement) => {
+    if (Todo !== null)
     //  clear currently displayed todos
     targetElement.innerHTML = '';
     // update to do lists display with current todoList
