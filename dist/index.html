@@ -4,27 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>To-do List</title>
-    <script defer="defer" src="main.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Domine&family=Inter:wght@400;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:wght@100&display=swap"
+      rel="stylesheet"
+    />
   <script defer src="%5Bmain%5D.js"></script></head>
   <body>
     <header></header>
     <main>
       <div class="container">
-        <section class="list-title">
+        <section class="list-titleaa flex-spaced">
           <p class="title">Today's To Do</p>
-          <i class="reset">reset</i>
+          <i id="reset" class="ptr"></i>
         </section>
         <section class="addlist">
-            <p class="placeholder">Add to your list...</p>
-            <i class="enter">-|</i>
+          <input id="todo-input" type="text" placeholder="Add to your list..." />
+          <i id="enter" class="ptr"></i>
         </section>
-        <section class="lists">
-          <label for="single-list">wash the dishes </label>
-          <input type="text" id="single-list" />
-        </section>
-        <section class="clear-all">
-            <p class="clear">Clear all completed</p>
-        </section>
+        <div class="list-container">
+        </div>
+        <div class="clear-all flex-centered">
+          <p class="ptr">Clear all completed</p>
+        </div>
       </div>
     </main>
   </body>
