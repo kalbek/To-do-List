@@ -25,7 +25,7 @@ function component() {
   // handle resetting all todos
   reset.addEventListener('click', () => {
     Todo.resetTodos();
-  })
+  });
 
   return element;
 }
