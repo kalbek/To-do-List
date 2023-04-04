@@ -3,8 +3,8 @@ import './style.css';
 import Todo from './modules/Todo.js';
 
 const addTodo = document.querySelector('#enter');
-const todoList = document.querySelector('.list-container');
 const todo = document.querySelector('#todo-input');
+const reset = document.querySelector('#reset');
 
 function addTodos() {
   if (todo.value !== '') Todo.setTodo(todo.value, false);
@@ -15,15 +15,17 @@ function addTodos() {
 function component() {
   const element = document.createElement('div');
 
-  // Todo.updateUI(todoList);
-
-  // handle event for add todo
+  // handle add todo's on click
   addTodo.addEventListener('click', () => {
     addTodos();
   });
-
+  // handle add todo's on Enter key pressed
   todo.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') addTodos();
+  });
+  // handle reset todos
+  reset.addEventListener('click', () => {
+    Todo.resetTodos();
   });
 
   return element;
@@ -32,9 +34,15 @@ function component() {
 window.onload = () => {
   // update todoList on page load
   const currentTodo = localStorage.getItem('todo');
-  // Todo.todoList = JSON.parse(currentTodo);
-  // if (Todo != null) Todo.updateUI(document.querySelector(".list-container"));
-
+  // initially since there is no todo's donot update ui from local storage
+  if (currentTodo === null) {
+    Todo.todoList = Todo.todoList.filter((todo) => todo.index === -1);
+    Todo.updateUI(document.querySelector('.list-container'));
+  } else {
+    // but if todos exist, update UI with local storage
+    Todo.todoList = JSON.parse(currentTodo);
+    Todo.updateUI(document.querySelector('.list-container'));
+  }
   todo.focus();
 };
 document.body.appendChild(component());
