@@ -2,9 +2,9 @@
 import './style.css';
 import Todo from './modules/Todo.js';
 
-const addTodo = document.querySelector('#enter');
-const todo = document.querySelector('#todo-input');
-const reset = document.querySelector('#reset');
+const addTodo = document.querySelector("#enter");
+const todoList = document.querySelector(".list-container");
+const todo = document.querySelector("#todo-input");
 
 function addTodos() {
   if (todo.value !== '') Todo.setTodo(todo.value, false);
@@ -13,18 +13,17 @@ function addTodos() {
 }
 
 function component() {
-  const element = document.createElement('div');
-  // handle adding todos on click
-  addTodo.addEventListener('click', () => {
+  const element = document.createElement("div");
+
+  // Todo.updateUI(todoList);
+
+  // handle event for add todo
+  addTodo.addEventListener("click", () => {
     addTodos();
   });
-  // handle adding new todos on Enetr key press
-  todo.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') addTodos();
-  });
-  // handle resetting all todos
-  reset.addEventListener('click', () => {
-    Todo.resetTodos();
+
+  todo.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") addTodos();
   });
 
   return element;
@@ -32,16 +31,10 @@ function component() {
 
 window.onload = () => {
   // update todoList on page load
-  const currentTodo = localStorage.getItem('todo');
-  // initially since there is no todo's donot update ui from local storage
-  if (currentTodo === null) {
-    Todo.todoList = Todo.todoList.filter((todo) => todo.index === -1);
-    Todo.updateUI(document.querySelector('.list-container'));
-  } else {
-    // but if todos exist, update UI with local storage
-    Todo.todoList = JSON.parse(currentTodo);
-    Todo.updateUI(document.querySelector('.list-container'));
-  }
+  const currentTodo = localStorage.getItem("todo");
+  // Todo.todoList = JSON.parse(currentTodo);
+  // if (Todo != null) Todo.updateUI(document.querySelector(".list-container"));
+
   todo.focus();
 };
 document.body.appendChild(component());
