@@ -4,6 +4,7 @@ import Todo from './modules/Todo.js';
 
 const addTodo = document.querySelector('#enter');
 const todo = document.querySelector('#todo-input');
+const reset = document.querySelector('#reset');
 
 function addTodos() {
   if (todo.value !== '') Todo.setTodo(todo.value, false);
@@ -13,14 +14,19 @@ function addTodos() {
 
 function component() {
   const element = document.createElement('div');
-  // handle event for add todo
+  // handle adding todos on click
   addTodo.addEventListener('click', () => {
     addTodos();
   });
-
+  // handle adding new todos on Enetr key press
   todo.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') addTodos();
   });
+  // handle resetting all todos
+  reset.addEventListener('click', () => {
+    Todo.resetTodos();
+  })
+
   return element;
 }
 
