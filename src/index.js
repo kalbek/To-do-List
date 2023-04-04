@@ -31,8 +31,8 @@ function component() {
 window.onload = () => {
   // update todoList on page load
   const currentTodo = localStorage.getItem("todo");
-  // Todo.todoList = JSON.parse(currentTodo);
-  // if (Todo != null) Todo.updateUI(document.querySelector(".list-container"));
+  Todo.todoList = JSON.parse(currentTodo);
+  if (Todo != null) Todo.updateUI(document.querySelector(".list-container"));
 
   todo.focus();
 };
