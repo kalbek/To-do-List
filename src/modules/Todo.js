@@ -177,8 +177,11 @@ export default class Todo {
   };
 
   static resetTodos = () => {
+    // remove all todos from todoList
     Todo.todoList = Todo.todoList.filter((todo) => todo.index === -1);
+    // update the local storage
     Todo.updateLocalstorage();
+    // update the UI
     const todoList = document.querySelector('.list-container');
     Todo.updateUI(todoList);
   }
