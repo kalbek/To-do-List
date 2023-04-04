@@ -1,6 +1,12 @@
 export default class Todo {
   // todo list arrat to store all todos
-  static todoList = [];
+  static todoList = [
+    {
+      description: "first todo . . . ",
+      completed: false,
+      index: 0,
+    },
+  ];
 
   // initialize todo values
   constructor(description, completed) {
@@ -11,10 +17,7 @@ export default class Todo {
 
   // update localstorage for todos
   static updateLocalstorage = () => {
-    const todo = Todo.todoList;
-    if (todo !== null) {
-      localStorage.setItem('todo', JSON.stringify(Todo.todoList));
-    }
+    localStorage.setItem("todo", JSON.stringify(Todo.todoList));
   };
 
   // add todo into Todo's todoList
