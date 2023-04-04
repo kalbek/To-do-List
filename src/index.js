@@ -13,9 +13,6 @@ function addTodos() {
 
 function component() {
   const element = document.createElement('div');
-
-  // Todo.updateUI(todoList);
-
   // handle event for add todo
   addTodo.addEventListener('click', () => {
     addTodos();
