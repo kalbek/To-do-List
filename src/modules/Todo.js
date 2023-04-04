@@ -11,8 +11,10 @@ export default class Todo {
 
   // update localstorage for todos
   static updateLocalstorage = () => {
-    let todo = Todo.todoList
-    todo !== null && localStorage.setItem('todo', JSON.stringify(Todo.todoList));
+    const todo = Todo.todoList;
+    if (todo !== null) {
+      localStorage.setItem('todo', JSON.stringify(Todo.todoList));
+    }
   };
 
   // add todo into Todo's todoList
@@ -86,8 +88,8 @@ export default class Todo {
                 task.index
               }' />
               <label id='checkbox-${task.index}' class='' for='single-list-${
-          task.index
-        }'>
+                task.index
+              }'>
                 <input class='list-input ${
                   task.completed ? 'completed' : ''
                 }' id='task-${task.index}' value='${task.description}' />
@@ -134,7 +136,7 @@ export default class Todo {
         // Todo.updateUI(todoList)
         // first select the checkboxes
         const todoCheckbox = document.querySelector(
-          `#todo-checkbox-${task.index}`
+          `#todo-checkbox-${task.index}`,
         );
         // add on change event listener for each checkboxes
         todoCheckbox.addEventListener('change', () => {
