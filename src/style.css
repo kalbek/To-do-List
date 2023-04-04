@@ -124,15 +124,10 @@ i:hover {
   opacity: 1;
 }
 
-.bgr, 
-.bgr * {
-  background-color: red;
-}
-
 .hide {
   display: none;
 }
 
 .drag-over {
-  border: dashed 3px red;
+  border: dashed 3px #000;
 }
