@@ -31,9 +31,16 @@ function component() {
 window.onload = () => {
   // update todoList on page load
   const currentTodo = localStorage.getItem("todo");
-  Todo.todoList = JSON.parse(currentTodo);
-  if (Todo != null) Todo.updateUI(document.querySelector(".list-container"));
-
+  // initially since there is no todo's donot update ui from local storage
+  if (currentTodo === null) {
+    Todo.todoList = Todo.todoList.filter(todo => todo.index === -1)
+    Todo.updateUI(document.querySelector(".list-container"));
+  }
+  // but if todos exist, update UI with local storage
+  else {
+    Todo.todoList = JSON.parse(currentTodo);
+    Todo.updateUI(document.querySelector(".list-container"));
+  }
   todo.focus();
 };
 document.body.appendChild(component());
