@@ -2,7 +2,7 @@ export default class Todo {
   // todo list arrat to store all todos
   static todoList = [
     {
-      description: "first todo . . . ",
+      description: 'first todo . . . ',
       completed: false,
       index: 0,
     },
@@ -17,7 +17,7 @@ export default class Todo {
 
   // update localstorage for todos
   static updateLocalstorage = () => {
-    localStorage.setItem("todo", JSON.stringify(Todo.todoList));
+    localStorage.setItem('todo', JSON.stringify(Todo.todoList));
   };
 
   // add todo into Todo's todoList
