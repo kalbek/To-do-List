@@ -23,7 +23,7 @@ class Todo {
   // add todo into Todo's todoList
   static addTodo = (description, completed) => {
     const todo = { description, completed, index: this.todoList.length };
-    // const todoList = document.querySelector('.list-container');
+    const todoList = document.querySelector('.list-container');
     this.todoList.push(todo);
     // Todo.updateUI(todoList);
     // update localstorage for todos
