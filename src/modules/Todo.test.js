@@ -13,45 +13,30 @@ describe("AddTodos", () => {
 
 describe("RemoveTodo", () => {
   test("should remove a todos i.e. ( an object) from todo list which is (an array)", () => {
-    // const firstTodo = { description: "first todo", completed: false, index: 0 };
-    // // first add two todos inside todo list
-    // Todo.addTodo("first todo", false);
-    // Todo.addTodo("second todo", false);
-    // // then remvoe one todo (the second todo) form todo list
-    // Todo.removeTodo(1);
-    // // test if the remaining todo contains only the first todo
-    // const remainingTodo = Todo.todoList.filter((todo) => todo.index === 0);
-    // expect(remainingTodo).toEqual([firstTodo]);
-    // expect(Todo.todoList).toContainEqual(fistTodo);
-
-    // first clear the todolist
     Todo.todoList.splice(0);
     const initialTodo = [
       {
         description: "first todo",
         completed: false,
-        index: 0,
       },
       {
         description: "second todo",
         completed: false,
-        index: 1,
       },
       {
         description: "third todo",
         completed: false,
-        index: 2,
       },
     ];
-    // remove the second todo
-    Todo.removeTodo(1);
-
-    // test if initialTodo contains the second todo (the one removed)
-    expect(initialTodo).not.toContain({
-      description: "second todo",
-      completed: false,
-      index: 1,
-    });
+    // test for removing each of these 3 todo inside Todo's todoList
+    for (let i = 0; i < initialTodo.length; i++) {
+      // add the todos insite Todo.todolist
+      Todo.addTodo(initialTodo.description, initialTodo.completed);
+      // remove the todos one by one
+      Todo.removeTodo(i);
+      // test if that specific todo is removed from Todo's todoList
+      expect(Todo.todoList).not.toContain(initialTodo[i]);
+    }
     // test if ID's of the remaining todos is updated after removing the first item
   });
 });
