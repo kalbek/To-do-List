@@ -40,6 +40,7 @@ class Todo {
   // remove todo from Todo's todoList by index
   static removeTodo = (id) => {
     const todoList = document.querySelector(".list-container");
+    const input = document.querySelector("#todo-input")
     this.todoList = this.todoList.filter((toDo) => toDo.index !== id);
 
     this.todoList.forEach((todo) => {
@@ -50,7 +51,7 @@ class Todo {
     // update the UI with the new todos 
     Todo.updateUI(todoList);
     // foucs carret on input box
-    // document.querySelector("#todo-input").focus();
+    input && document.querySelector("#todo-input").focus();
     // update localstorage for todos
     Todo.updateLocalstorage();
   };
