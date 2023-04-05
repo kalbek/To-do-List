@@ -13,7 +13,9 @@ describe("AddTodos", () => {
 
 describe("RemoveTodo", () => {
   test("should remove a todos i.e. ( an object) from todo list which is (an array)", () => {
+    // clear all todo's from todoList for new test
     Todo.todoList.splice(0);
+    // define 3 new todos
     const initialTodo = [
       {
         description: "first todo",
@@ -28,15 +30,22 @@ describe("RemoveTodo", () => {
         completed: false,
       },
     ];
-    // test for removing each of these 3 todo inside Todo's todoList
-    for (let i = 0; i < initialTodo.length; i++) {
-      // add the todos insite Todo.todolist
-      Todo.addTodo(initialTodo.description, initialTodo.completed);
-      // remove the todos one by one
+    // add these todos inside Todo's todolist
+    initialTodo.forEach((todo, i) => {
+      Todo.addTodo(todo.description, todo.completed);
+      // console.log("add steps: " + i, Todo.todoList);
+    });
+    
+    // test for remove function while removing each of these 3 todos one by one
+    // from Todo's todoList
+    Todo.todoList.forEach((todo, i) => {
       Todo.removeTodo(i);
       // test if that specific todo is removed from Todo's todoList
       expect(Todo.todoList).not.toContain(initialTodo[i]);
-    }
-    // test if ID's of the remaining todos is updated after removing the first item
+      // test if ID's of the remaining todos is updated after removing the first item
+      // console.log(Todo.todoList)
+      // expect(Todo.todoList[i].index).toEqual(todo.index)
+    });
+  
   });
 });

@@ -38,13 +38,17 @@ class Todo {
   };
 
   // remove todo from Todo's todoList by index
-  static removeTodo = (index) => {
+  static removeTodo = (id) => {
     const todoList = document.querySelector(".list-container");
-    this.todoList = this.todoList.filter((toDo) => toDo.index !== index);
+    this.todoList = this.todoList.filter((toDo) => toDo.index !== id);
     // update id's of remaining todo's
-    this.todoList.forEach((todo) => {
-      if (todo.index > index) todo.index -= 1;
-    });
+    for (let i = 0; i < this.todoList.length; i++) {
+      let todoIndex = this.todoList[i].index;
+      if (todoIndex > id) {
+        todoIndex -= 1;
+      }
+    }
+    // update the UI with the new todos 
     Todo.updateUI(todoList);
     // foucs carret on input box
     // document.querySelector("#todo-input").focus();
