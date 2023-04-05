@@ -41,13 +41,12 @@ class Todo {
   static removeTodo = (id) => {
     const todoList = document.querySelector(".list-container");
     this.todoList = this.todoList.filter((toDo) => toDo.index !== id);
-    // update id's of remaining todo's
-    for (let i = 0; i < this.todoList.length; i++) {
-      let todoIndex = this.todoList[i].index;
-      if (todoIndex > id) {
-        todoIndex -= 1;
+
+    this.todoList.forEach((todo) => {
+      if (todo.index > id) {
+        todo.index -= 1;
       }
-    }
+    })
     // update the UI with the new todos 
     Todo.updateUI(todoList);
     // foucs carret on input box

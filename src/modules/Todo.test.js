@@ -12,40 +12,49 @@ describe("AddTodos", () => {
 });
 
 describe("RemoveTodo", () => {
-  test("should remove a todos i.e. ( an object) from todo list which is (an array)", () => {
+  test("should remove a todos from todo list and ids must be updated", () => {
     // clear all todo's from todoList for new test
     Todo.todoList.splice(0);
-    // define 3 new todos
+    // define 3 new todo items
     const initialTodo = [
       {
         description: "first todo",
         completed: false,
+        index: 0,
       },
       {
         description: "second todo",
         completed: false,
+        index: 1,
       },
       {
         description: "third todo",
         completed: false,
+        index: 2,
       },
     ];
-    // add these todos inside Todo's todolist
+    // todo list to expect after removing the second to do item
+    // note: the ids are updating
+    const expectedOutPut = [
+      {
+        description: "first todo",
+        completed: false,
+        index: 0,
+      },
+      {
+        description: "third todo",
+        completed: false,
+        index: 1,
+      },
+    ];
+
+    // add the 3 todos inside todolist
     initialTodo.forEach((todo, i) => {
       Todo.addTodo(todo.description, todo.completed);
-      // console.log("add steps: " + i, Todo.todoList);
     });
-    
-    // test for remove function while removing each of these 3 todos one by one
-    // from Todo's todoList
-    Todo.todoList.forEach((todo, i) => {
-      Todo.removeTodo(i);
-      // test if that specific todo is removed from Todo's todoList
-      expect(Todo.todoList).not.toContain(initialTodo[i]);
-      // test if ID's of the remaining todos is updated after removing the first item
-      // console.log(Todo.todoList)
-      // expect(Todo.todoList[i].index).toEqual(todo.index)
-    });
-  
+    // remove the second todo item
+    Todo.removeTodo(1);
+    // test if the todoList will be equal to the expected out put
+    expect(Todo.todoList).toEqual(expectedOutPut);
   });
 });
