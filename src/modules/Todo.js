@@ -47,7 +47,7 @@ class Todo {
     });
     Todo.updateUI(todoList);
     // foucs carret on input box
-    document.querySelector("#todo-input").focus();
+    // document.querySelector("#todo-input").focus();
     // update localstorage for todos
     Todo.updateLocalstorage();
   };
