@@ -23,16 +23,16 @@ class Todo {
   // add todo into Todo's todoList
   static addTodo = (description, completed) => {
     const todo = { description, completed, index: this.todoList.length };
-    const todoList = document.querySelector('.list-container');
+    const todoList = document.querySelector(".list-container");
     this.todoList.push(todo);
-    // Todo.updateUI(todoList);
+    Todo.updateUI(todoList);
     // update localstorage for todos
-    // Todo.updateLocalstorage();
+    Todo.updateLocalstorage();
   };
-  
+
   // update todo as a whole (especially) from localstorage
   static updateTodo = (currentTodo) => {
-    console.log(this.todoList)
+    console.log(this.todoList);
     this.todoList = currentTodo;
     Todo.updateUI(document.querySelector(".list-container"));
   };
@@ -81,11 +81,12 @@ class Todo {
   static updateUI = (targetElement) => {
     if (Todo.todoList != null) {
       //  clear currently displayed todos
-      targetElement.innerHTML = "";
-      // update to do lists display with current todoList
-      for (let i = this.todoList.length - 1; i >= 0; i -= 1) {
-        const task = this.todoList[i];
-        targetElement.innerHTML += `
+      if (targetElement !== null) {
+        targetElement.innerHTML = "";
+        // update to do lists display with current todoList
+        for (let i = this.todoList.length - 1; i >= 0; i -= 1) {
+          const task = this.todoList[i];
+          targetElement.innerHTML += `
         <section class='lists lists-${
           task.index
         } drop-targets' draggable=${true}>
@@ -94,8 +95,8 @@ class Todo {
                 task.index
               }' />
               <label id='checkbox-${task.index}' class='' for='single-list-${
-          task.index
-        }'>
+            task.index
+          }'>
                 <input class='list-input ${
                   task.completed ? "completed" : ""
                 }' id='task-${task.index}' value='${task.description}' />
@@ -104,113 +105,117 @@ class Todo {
             <i id='selection' class='ptr select-${i}'></i>
         </section>
       `;
-      }
-      // handle todo drag
-      Todo.todoList.forEach((todo) => {
-        // select the item element
-        const select = document.querySelector(`.lists-${todo.index}`);
-        function dragEnter(e) {
-          // e.preventDefault();
-          e.target.classList.add("drag-over");
         }
 
-        function dragOver(e) {
-          // e.preventDefault();
-          e.target.classList.add("drag-over");
-        }
+        // handle todo drag
+        Todo.todoList.forEach((todo) => {
+          // select the item element
+          const select = document.querySelector(`.lists-${todo.index}`);
+          function dragEnter(e) {
+            // e.preventDefault();
+            e.target.classList.add("drag-over");
+          }
 
-        function dragLeave(e) {
-          e.target.classList.remove("drag-over");
-        }
-        // handle the dragstart
+          function dragOver(e) {
+            // e.preventDefault();
+            e.target.classList.add("drag-over");
+          }
 
-        function dragStart(e) {
-          e.dataTransfer.setData("text/plain", e.target.id);
-          setTimeout(() => {
-            e.target.classList.add("hide");
-          }, 0);
-        }
+          function dragLeave(e) {
+            e.target.classList.remove("drag-over");
+          }
+          // handle the dragstart
 
-        function drop(e) {
-          e.target.classList.remove("drag-over");
+          function dragStart(e) {
+            e.dataTransfer.setData("text/plain", e.target.id);
+            setTimeout(() => {
+              e.target.classList.add("hide");
+            }, 0);
+          }
 
-          // get the draggable element
-          const id = e.dataTransfer.getData("text/plain");
-          const draggable = document.getElementById(id);
+          function drop(e) {
+            e.target.classList.remove("drag-over");
 
-          // add it to the drop target
-          e.target.appendChild(draggable);
+            // get the draggable element
+            const id = e.dataTransfer.getData("text/plain");
+            const draggable = document.getElementById(id);
 
-          // display the draggable element
-          draggable.classList.remove("hide");
-        }
+            // add it to the drop target
+            e.target.appendChild(draggable);
 
-        // attach the dragstart event handler
-        select.addEventListener("dragstart", dragStart);
-        select.addEventListener("dragenter", dragEnter);
-        select.addEventListener("dragover", dragOver);
-        select.addEventListener("dragleave", dragLeave);
-        select.addEventListener("drop", drop);
-      });
+            // display the draggable element
+            draggable.classList.remove("hide");
+          }
 
-      // for each newly displayed to does create remove event
-      this.todoList.forEach((todo, index) => {
-        const select = document.querySelector(`.select-${index}`);
-        const selectedTodoIndex = Number(select.classList[1].slice(7));
-        const todoRow = document.querySelector(`.lists-${selectedTodoIndex}`);
-        select.addEventListener("click", () => {
-          // select the todo to be edited or removed
-          select.id = "selected";
-          Todo.updateTodos(todo, selectedTodoIndex);
-          // select to do row
-          todoRow.classList.add("active");
-          // create removing event for select's remove instance
-          select.classList.add("remove-todo");
-          const remove = document.querySelector(".remove-todo");
-          remove.addEventListener("click", () => {
-            Todo.removeTodo(selectedTodoIndex);
-          });
+          // attach the dragstart event handler
+          select.addEventListener("dragstart", dragStart);
+          select.addEventListener("dragenter", dragEnter);
+          select.addEventListener("dragover", dragOver);
+          select.addEventListener("dragleave", dragLeave);
+          select.addEventListener("drop", drop);
         });
-        // also update todo's when manually selected
-        // (i.e.update by focusing on input box of each todos)
-        const currentTodo = document.querySelector(`#task-${index}`);
-        if (currentTodo !== null) {
-          currentTodo.addEventListener("click", () => {
-            todoRow.classList.add("active");
-            const selectedTodoIndex = Number(currentTodo.id.slice(5));
+
+        // for each newly displayed to does create remove event
+        this.todoList.forEach((todo, index) => {
+          const select = document.querySelector(`.select-${index}`);
+          const selectedTodoIndex = Number(select.classList[1].slice(7));
+          const todoRow = document.querySelector(`.lists-${selectedTodoIndex}`);
+          select.addEventListener("click", () => {
+            // select the todo to be edited or removed
+            select.id = "selected";
             Todo.updateTodos(todo, selectedTodoIndex);
+            // select to do row
+            todoRow.classList.add("active");
+            // create removing event for select's remove instance
+            select.classList.add("remove-todo");
+            const remove = document.querySelector(".remove-todo");
+            remove.addEventListener("click", () => {
+              Todo.removeTodo(selectedTodoIndex);
+            });
           });
-        }
-      });
-
-      // handle selections for todo's checkboxes
-      Todo.todoList.forEach((task) => {
-        // const todoList = document.querySelector('.list-container');
-        // Todo.updateUI(todoList)
-        // first select the checkboxes
-        const todoCheckbox = document.querySelector(
-          `#todo-checkbox-${task.index}`
-        );
-        // add on change event listener for each checkboxes
-        todoCheckbox.addEventListener("change", () => {
-          task.completed = !task.completed;
-          // get the label to those checkboxes
-          const label = document.querySelector(`#checkbox-${task.index}`);
-          // toogel their classes based on selection
-          if (!task.completed) label.classList.remove("completed");
-          else label.classList.add("completed");
-          // update localstorage for todos
-          Todo.updateLocalstorage();
+          // also update todo's when manually selected
+          // (i.e.update by focusing on input box of each todos)
+          const currentTodo = document.querySelector(`#task-${index}`);
+          if (currentTodo !== null) {
+            currentTodo.addEventListener("click", () => {
+              todoRow.classList.add("active");
+              const selectedTodoIndex = Number(currentTodo.id.slice(5));
+              Todo.updateTodos(todo, selectedTodoIndex);
+            });
+          }
         });
-      });
-      // keep checkboxes checked status when updating the ui
-      // i.e. for completed tasks check the checkbox and for
-      // uncompleted tasks uncheck the checkbox
-      Todo.todoList.forEach((todo) => {
-        const checkbox = document.querySelector(`#todo-checkbox-${todo.index}`);
-        if (todo.completed) checkbox.checked = true;
-      });
-      Todo.clearCompletedLists();
+
+        // handle selections for todo's checkboxes
+        Todo.todoList.forEach((task) => {
+          // const todoList = document.querySelector('.list-container');
+          // Todo.updateUI(todoList)
+          // first select the checkboxes
+          const todoCheckbox = document.querySelector(
+            `#todo-checkbox-${task.index}`
+          );
+          // add on change event listener for each checkboxes
+          todoCheckbox.addEventListener("change", () => {
+            task.completed = !task.completed;
+            // get the label to those checkboxes
+            const label = document.querySelector(`#checkbox-${task.index}`);
+            // toogel their classes based on selection
+            if (!task.completed) label.classList.remove("completed");
+            else label.classList.add("completed");
+            // update localstorage for todos
+            Todo.updateLocalstorage();
+          });
+        });
+        // keep checkboxes checked status when updating the ui
+        // i.e. for completed tasks check the checkbox and for
+        // uncompleted tasks uncheck the checkbox
+        Todo.todoList.forEach((todo) => {
+          const checkbox = document.querySelector(
+            `#todo-checkbox-${todo.index}`
+          );
+          if (todo.completed) checkbox.checked = true;
+        });
+        Todo.clearCompletedLists();
+      }
     }
   };
 
