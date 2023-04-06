@@ -7,7 +7,7 @@ const todo = document.querySelector('#todo-input');
 const reset = document.querySelector('#reset');
 
 function addTodos() {
-  if (todo.value !== '') Todo.setTodo(todo.value, false);
+  if (todo.value !== '') Todo.addTodo(todo.value, false);
   todo.value = '';
   todo.focus();
 }
