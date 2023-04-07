@@ -1,47 +1,98 @@
-const Todo = require("./Todo.js");
-const { TextEncoder } = require("util").TextEncoder;
 const { JSDOM } = require("jsdom");
+const { updateUI } = require("./Todo.js");
+const Todo = require("./Todo.js");
+// const { TextEncoder } = require('util').TextEncoder;
 
-const addLiToDOM = jest.fn();
+// const addLiToDOM = jest.fn();
 // const { TextEncoder, TextDecoder } = require('util').textEncoder;
 
-describe("addLiToDOM function", () => {
-  // set up the JSDOM environment
-  const { window } = new JSDOM("<!doctype html><html><body></body></html>");
-  global.document = window.document;
-  
-  // test that the function adds an <li> element to the DOM
-  it("adds an <section> element to the DOM", () => {
-    // define the list and the <li> element to be added
-    const list = ["item1", "item2", "item3"];
-    const li = document.createElement("li");
-    const di = document.createElement("div");
-    di.innerHTML += `<p>ey</p>`
+// describe('addLiToDOM function', () => {
+//   // set up the JSDOM environment
+//   const { window } = new JSDOM('<!doctype html><html><body></body></html>');
+//   global.document = window.document;
+
+//   // test that the function adds an <li> element to the DOM
+//   it('adds an <section> element to the DOM', () => {
+//     // define the list and the <li> element to be added
+//     // const list = ['item1', 'item2', 'item3'];
+//     // const li = document.createElement('li');
+//     const di = document.createElement('div');
+//     di.innerHTML += '<p>ey</p>';
+
+//     // li.textContent = list[0];
+//     // first add a single to do fot the dom element not to be empty
+//     // const newTodo = { description: 'first todo', completed: false, index: 0 };
+//     // add the todo object insite todos
+//     Todo.addTodo('first todo', false);
+//     di.classList.add('list-container');
+//     const todoList = document.querySelector('.list-container');
+
+//     // then update ui
+//     Todo.updateUI(todoList);
+//     // call the function to be tested with the list and the <li> element
+//     // addLiToDOM(list, li);
+//     // console.log('todoList: ', todoList);
+
+//     // assert that the <li> element was added to the DOM
+//     // expect(document.querySelector("ul").contains(li)).toBe(true);
+//     // expect(todoList.contains(section)).toBe(true);
+//   });
+// });
+
+// test updateUI
+// describe("updateUI", () => {
+//   test("should create todo lists HTML element for each to dolist", () => {
+//     // create a div element as a target i.e. where the HTML element is to be created
+
+//     const target = document.querySelectorAll("list-container");
+//     console.log(target);
+//     Todo.updateUI(target);
+//     // Assert
+//     // test if the target is not null (or has been updated)
+//     // expect(target).not.toBeNull();
+//   });
+// });
+
+describe("createTodoListHTMLElements", () => {
+  it("should create todo lists HTML element in the DOM", () => {
+    // Arrange
+    // create target div continer to append the todos
+    const target = document.createElement("div");
+    console.log("tar: ", target);
+    target.setAttribute("id", "list-container");
+    let expectedOutputHtml = "";
+    const mockTodos = [
+      { description: "first todo", completed: false, index: 0 },
+      { description: "second todo", completed: false, index: 1 },
+      { description: "third todo", completed: false, index: 2 },
+    ];
+    // Act
+    mockTodos.forEach((todo) => {
+      Todo.addTodo(todo.description, todo.completed);
+    });
+    let todos;
+    for (let i = mockTodos.length - 1; i >= 0; i -= 1) {
+      const task = mockTodos[i];
+      todos += `<section class='lists lists-${task.index} drop-targets' draggable=${true}><div class='list'><input class='single-todo' type='checkbox' id='todo-checkbox-${task.index}' /><label id='checkbox-${task.index}' class='' for='single-list-${task.index}'><input class='list-input ${task.completed ? "completed" : ""}' id='task-${task.index}' value='${task.description}' /></label></div><i id='selection' class='ptr select-${i}'></i></section>`;
+    }
+    Todo.createTodoListHTMLElements(target, mockTodos);
+    expect(target.innerHTML).toEqual(todos)
+    // console.log("target: ", target)
+    // console.log("todo: ", document.getElementById('todo'))
     
-    li.textContent = list[0];
-    // first add a single to do fot the dom element not to be empty
-    const newTodo = { description: "first todo", completed: false, index: 0 };
-    // add the todo object insite todos
-    Todo.addTodo("first todo", false);
-    di.classList.add('list-container')
-    const todoList = document.querySelector('.list-container');
-
-    // then update ui
-    Todo.updateUI(todoList);
-    // call the function to be tested with the list and the <li> element
-    // addLiToDOM(list, li);
-    console.log("todoList: ", todoList)
-
-    // assert that the <li> element was added to the DOM
-    // expect(document.querySelector("ul").contains(li)).toBe(true);
-    // expect(todoList.contains(section)).toBe(true);
+    //Assert
+    // expect(Todo.createTodoListHTMLElements(target, mockTodos).toEqual(expectedOutputHtml))
   });
 });
 
 describe("AddTodos", () => {
   test("should add todo (object) into todo list (array)", () => {
     // create a single todo object
-    const newTodo = { description: "first todo", completed: false, index: 0 };
+    const newTodo = {
+      description: "first todo",
+      completed: false,
+      index: 0,
+    };
     // add the todo object insite todos
     Todo.addTodo("first todo", false);
     // test if the todo lists contains the newly added todos
