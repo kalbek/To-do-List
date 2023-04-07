@@ -75,20 +75,6 @@ class Todo {
 
   static createTodoListHTMLElements = () => {
     target.innerHTML = "";
-    // for (let i = todos.length - 1; i >= 0; i -= 1) {
-    //   const task = todos[i];
-    //   target.innerHTML += `<section class='lists lists-${
-    //     task.index
-    //   } drop-targets' draggable=${true}><div class='list'><input class='single-todo' type='checkbox' id='todo-checkbox-${
-    //     task.index
-    //   }' /><label id='checkbox-${task.index}' class='' for='single-list-${
-    //     task.index
-    //   }'><input class='list-input ${
-    //     task.completed ? "completed" : ""
-    //   }' id='task-${task.index}' value='${
-    //     task.description
-    //   }' /></label></div><i id='selection' class='ptr select-${i}'></i></section>`;
-    // }
 
     section.classList.add("lists", "lists-" + task.index);
     // create list container
