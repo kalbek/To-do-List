@@ -44,7 +44,7 @@ describe("AddTodos", () => {
     };
     // add the todo object insite todos
     Todo.addTodo("first todo", false);
-    // test if the todo lists contains the newly added todos
+    // test if the todo lists contains the newly added todo
     expect(Todo.todoList).toContainEqual(newTodo);
   });
 });
