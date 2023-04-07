@@ -1,57 +1,6 @@
 const { JSDOM } = require("jsdom");
 const { updateUI } = require("./Todo.js");
 const Todo = require("./Todo.js");
-// const { TextEncoder } = require('util').TextEncoder;
-
-// const addLiToDOM = jest.fn();
-// const { TextEncoder, TextDecoder } = require('util').textEncoder;
-
-// describe('addLiToDOM function', () => {
-//   // set up the JSDOM environment
-//   const { window } = new JSDOM('<!doctype html><html><body></body></html>');
-//   global.document = window.document;
-
-//   // test that the function adds an <li> element to the DOM
-//   it('adds an <section> element to the DOM', () => {
-//     // define the list and the <li> element to be added
-//     // const list = ['item1', 'item2', 'item3'];
-//     // const li = document.createElement('li');
-//     const di = document.createElement('div');
-//     di.innerHTML += '<p>ey</p>';
-
-//     // li.textContent = list[0];
-//     // first add a single to do fot the dom element not to be empty
-//     // const newTodo = { description: 'first todo', completed: false, index: 0 };
-//     // add the todo object insite todos
-//     Todo.addTodo('first todo', false);
-//     di.classList.add('list-container');
-//     const todoList = document.querySelector('.list-container');
-
-//     // then update ui
-//     Todo.updateUI(todoList);
-//     // call the function to be tested with the list and the <li> element
-//     // addLiToDOM(list, li);
-//     // console.log('todoList: ', todoList);
-
-//     // assert that the <li> element was added to the DOM
-//     // expect(document.querySelector("ul").contains(li)).toBe(true);
-//     // expect(todoList.contains(section)).toBe(true);
-//   });
-// });
-
-// test updateUI
-// describe("updateUI", () => {
-//   test("should create todo lists HTML element for each to dolist", () => {
-//     // create a div element as a target i.e. where the HTML element is to be created
-
-//     const target = document.querySelectorAll("list-container");
-//     console.log(target);
-//     Todo.updateUI(target);
-//     // Assert
-//     // test if the target is not null (or has been updated)
-//     // expect(target).not.toBeNull();
-//   });
-// });
 
 describe("createTodoListHTMLElements", () => {
   it("should create todo lists HTML element in the DOM", () => {
