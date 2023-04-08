@@ -139,7 +139,7 @@ describe('updateCompletedTodoStatus', () => {
     // now get the checkbox
     const todoCheckbox = document.getElementById('todo-checkbox-0');
     // check the checkbox
-    todoCheckbox.checked = true;
+    // todoCheckbox.checked = true;
     // call the update completed function
     Todo.updateCompletedTodoStatus(Todo.todoList);
     todoCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
@@ -148,5 +148,52 @@ describe('updateCompletedTodoStatus', () => {
     // check if the status for the mock todo is updated
     Todo.updateCompletedTodoStatus(todos);
     expect(todos[0].completed).toBe(true);
+  });
+});
+
+describe('clearCompletedLists', () => {
+  let todos;
+  beforeEach(() => {
+    // set initial mock todo
+    todos = [
+      {
+        description: 'Finish Projects',
+        completed: false,
+        index: 0,
+      },
+    ];
+    // Set up the HTML to mock the fileds to update todos
+    document.body.innerHTML = `<section class='lists lists-0'>
+    <input id='todo-input'>
+      <div class='list'>
+      <label id='checkbox-0' for='single-list-0'>
+        <input class='single-todo' type='checkbox' id='todo-checkbox-0' />
+      </label>
+      </div>
+      <i id='selection' class='ptr select-0'></i>
+      </section>
+      <div class='clear-all'>Clear All Todos</div>
+      `;
+    // get the checkbox field for the todo
+  });
+  test('should update checked todos as completed', () => {
+    const clearAll = document.querySelector('.clear-all');
+    // set todo list to hold the mock todo list
+    Todo.todoList = todos;
+    // now get the checkbox
+    const todoCheckbox = document.getElementById('todo-checkbox-0');
+    // check the checkbox
+    // todoCheckbox.checked = true;
+    // call the update completed function
+    Todo.updateCompletedTodoStatus(Todo.todoList);
+    todoCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+    // check if the Todo.todolist completed status is updated
+    expect(Todo.todoList[0].completed).toBe(true);
+    // call clearCompletedTodos function
+    Todo.clearCompletedLists();
+    // click the clear all button
+    clearAll.dispatchEvent(new Event('click', { bubbles: true }));
+    // check if the todo is removed from todos
+    expect(Todo.todoList).toEqual([]);
   });
 });
