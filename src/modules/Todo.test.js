@@ -64,8 +64,8 @@ describe('RemoveTodo', () => {
 });
 
 describe('editTodo function', () => {
-  let input; let
-    todos;
+  let input;
+  let todos;
   beforeEach(() => {
     // set initial mock todo
     todos = {
@@ -107,5 +107,46 @@ describe('editTodo function', () => {
     expect(updatedTodoList && updatedTodoList[0].description).toBe(
       'Take the quiz.',
     );
+  });
+});
+
+describe('updateCompletedTodoStatus', () => {
+  let todos;
+  beforeEach(() => {
+    // set initial mock todo
+    todos = [
+      {
+        description: 'Finish Projects',
+        completed: false,
+        index: 0,
+      },
+    ];
+    // Set up the HTML to mock the fileds to update todos
+    document.body.innerHTML = `<section class='lists lists-0'>
+    <input id='todo-input'>
+      <div class='list'>
+      <label id='checkbox-0' for='single-list-0'>
+        <input class='single-todo' type='checkbox' id='todo-checkbox-0' />
+      </label>
+      </div>
+      <i id='selection' class='ptr select-0'></i>
+      </section>`;
+    // get the checkbox field for the todo
+  });
+  test('should update checked todos as completed', () => {
+    // set todo list to hold the mock todo list
+    Todo.todoList = todos;
+    // now get the checkbox
+    const todoCheckbox = document.getElementById('todo-checkbox-0');
+    // check the checkbox
+    todoCheckbox.checked = true;
+    // call the update completed function
+    Todo.updateCompletedTodoStatus(Todo.todoList);
+    todoCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+    // check if the Todo.todolist is updated
+    expect(Todo.todoList[0].completed).toBe(true);
+    // check if the status for the mock todo is updated
+    Todo.updateCompletedTodoStatus(todos);
+    expect(todos[0].completed).toBe(true);
   });
 });

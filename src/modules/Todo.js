@@ -72,7 +72,40 @@ class Todo {
     document.getElementById(`task-${indexToUpdate}`).focus();
   };
 
-  static createTodoListHTMLElements = () => {};
+  static updateCompletedTodoStatus = (todo) => {
+    // handle selections for todo's checkboxes
+    if (todo.length > 0) {
+      todo.forEach((task) => {
+        // first select the checkboxes
+        const todoCheckbox = document.querySelector(
+          `#todo-checkbox-${task.index}`,
+        );
+        // add on change event listener for each checkboxes
+        if (todoCheckbox !== null) {
+          todoCheckbox.addEventListener('change', () => {
+            task.completed = !task.completed;
+            // get the label to those checkboxes
+            const label = document.querySelector(`#checkbox-${task.index}`);
+            // toogel their classes based on selection
+            if (!task.completed) label.classList.remove('completed');
+            else label.classList.add('completed');
+            // update localstorage for todos
+            Todo.updateLocalstorage();
+          });
+        }
+      });
+      // keep checkboxes checked status when updating the ui
+      // i.e. for completed tasks check the checkbox and for
+      // uncompleted tasks uncheck the checkbox
+      todo.forEach((todo) => {
+        const checkbox = document.querySelector(
+          `#todo-checkbox-${todo.index}`,
+        );
+        if (todo.completed) checkbox.checked = true;
+      });
+      Todo.clearCompletedLists();
+    }
+  };
 
   static updateUI = (targetElement) => {
     if (Todo.todoList != null) {
@@ -125,41 +158,7 @@ class Todo {
             });
           }
         });
-
-        // handle selections for todo's checkboxes
-        if (Todo.todoList.length > 0) {
-          Todo.todoList.forEach((task) => {
-            // const todoList = document.querySelector('.list-container');
-            // Todo.updateUI(todoList)
-            // first select the checkboxes
-            const todoCheckbox = document.querySelector(
-              `#todo-checkbox-${task.index}`,
-            );
-            // add on change event listener for each checkboxes
-            if (todoCheckbox !== null) {
-              todoCheckbox.addEventListener('change', () => {
-                task.completed = !task.completed;
-                // get the label to those checkboxes
-                const label = document.querySelector(`#checkbox-${task.index}`);
-                // toogel their classes based on selection
-                if (!task.completed) label.classList.remove('completed');
-                else label.classList.add('completed');
-                // update localstorage for todos
-                Todo.updateLocalstorage();
-              });
-            }
-          });
-          // keep checkboxes checked status when updating the ui
-          // i.e. for completed tasks check the checkbox and for
-          // uncompleted tasks uncheck the checkbox
-          Todo.todoList.forEach((todo) => {
-            const checkbox = document.querySelector(
-              `#todo-checkbox-${todo.index}`,
-            );
-            if (todo.completed) checkbox.checked = true;
-          });
-          Todo.clearCompletedLists();
-        }
+        Todo.updateCompletedTodoStatus(Todo.todoList);
       }
     }
   };
