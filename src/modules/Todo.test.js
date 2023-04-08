@@ -131,15 +131,12 @@ describe('updateCompletedTodoStatus', () => {
       </div>
       <i id='selection' class='ptr select-0'></i>
       </section>`;
-    // get the checkbox field for the todo
   });
   test('should update checked todos as completed', () => {
     // set todo list to hold the mock todo list
     Todo.todoList = todos;
     // now get the checkbox
     const todoCheckbox = document.getElementById('todo-checkbox-0');
-    // check the checkbox
-    // todoCheckbox.checked = true;
     // call the update completed function
     Todo.updateCompletedTodoStatus(Todo.todoList);
     todoCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
@@ -182,8 +179,6 @@ describe('clearCompletedLists', () => {
     Todo.todoList = todos;
     // now get the checkbox
     const todoCheckbox = document.getElementById('todo-checkbox-0');
-    // check the checkbox
-    // todoCheckbox.checked = true;
     // call the update completed function
     Todo.updateCompletedTodoStatus(Todo.todoList);
     todoCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
